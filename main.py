@@ -1,14 +1,13 @@
 import os
 import re
 import requests
-from tqdm import tqdm
 import urllib3
 import mimetypes
 from urllib.parse import urlparse
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-def downloader(url):
+def downloader(url, progress_callback=None):
     download_dir = "testdir"
     os.makedirs(download_dir, exist_ok=True)
     headers={
@@ -44,13 +43,12 @@ def downloader(url):
         filepath=os.path.join(download_dir, filename)
         print(f"Downloading to:{filepath}")
         total_size=int(response.headers.get("content-length", 0))
-        with open(filepath, "wb") as file, tqdm(
-            desc=filename, total=total_size, unit="iB", unit_scale=True
-        ) as bar:
+        downloaded_size=0
+        with open(filepath, "wb") as file:
             for chunk in response.iter_content(chunk_size=8192):
                 if chunk:
                     file.write(chunk)
-                    bar.update(len(chunk))
+                    downloaded_size=downloaded_size+len(chunk)
         print("\nDownload Complete")
     except requests.exceptions.ConnectionError:
         print("\n[Error] Network connection failed. Check your internet or firewall.")
@@ -61,7 +59,7 @@ def downloader(url):
 if __name__=="__main__":
     url=str(input("Enter an url to download:"))
     downloader(url)
-#First Commit for github
+
 
 
 
