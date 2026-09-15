@@ -2,7 +2,7 @@ import streamlit as st
 from main import get_file_info, process_download
 
 st.title("Optimized Downloader")
-st.write("Paste a link and press **Enter**. A new cell will appear automatically!")
+st.write("Paste a link and press **Enter**")
 
 if "links" not in st.session_state:
     st.session_state.links = [""]
