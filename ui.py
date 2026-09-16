@@ -52,7 +52,7 @@ if st.button("Download All") and valid_urls:
 
             try:
                 filename_text.markdown(f"**Saving as:** `{cached_name}`")
-                status_text.text("Connecting to server...")
+                status_text.text("Fetching...")
 
                 response, filename = get_file_info(url)
 
@@ -73,4 +73,4 @@ if st.button("Download All") and valid_urls:
             except Exception as e:
                 filename_text.error(f"Failed to connect: {e}")
 
-    st.success("All downloads finished!")
+    st.success("All downloads completed")
